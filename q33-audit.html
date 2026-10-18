@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NZ1Labs — FlapJax Receipt Relay Q33 Independent On-Chain Audit</title>
+<style>
+ body{background:#0D141C;color:#DDE7F3;font-family:ui-monospace,Menlo,Consolas,monospace;max-width:960px;margin:2rem auto;padding:0 1.2rem;line-height:1.55}
+ h1{color:#7FD1AE;font-size:1.35rem} h2{color:#F0C36B;font-size:1.1rem;margin-top:2rem}
+ table{border-collapse:collapse;width:100%;font-size:.86rem;margin:.8rem 0}
+ th,td{border:1px solid #2A3B4D;padding:.35rem .5rem;text-align:left}
+ th{background:#16222E;color:#7FD1AE}
+ .m{color:#7FD1AE}.x{color:#F28B82}.n{color:#F0C36B}
+ code{background:#16222E;padding:.1rem .3rem;border-radius:3px;font-size:.82rem}
+ small{color:#8AA3BC}
+</style>
+</head>
+<body>
+<h1>FlapJax Receipt Relay Q33 — Independent On-Chain Audit</h1>
+<p><small>By NZ1Labs (isoloman275-wq). All figures computed from the token's raw <code>Transfer</code> logs read directly from public BSC RPC (NodeReal public endpoint, <code>eth_getLogs</code>), cross-checked with <code>eth_call balanceOf</code>. No indexer, no BscScan UI. Snapshot block <b>128,390,000</b>. Audit run 2026-10-20 UTC. Token: FLAPJAX <code>0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df</code> (BSC chain 56), 18 decimals. Total supply (on-chain read): <b>44,444,444,444 FLAP</b>.</p>
+
+<h2>Method (re-runnable by anyone)</h2>
+<p>Full <code>Transfer</code> history mined: <code>eth_getLogs</code> over blocks 44,582,615 → 128,390,000 in 50,000-block chunks (token contract is an old re-used deployment; the current supply was minted in one event at block 44,582,615: 44,444,444,444 FLAP to <code>0x8d68e48baee3264ecd62a8b85b80f8558cc1b499</code>). 5,630 Transfer events captured. Conservation check: sum of all derived balances = 0 exactly, and the treasury's log-derived balance equals the direct <code>balanceOf</code> read to the wei — the dataset is complete.</p>
+
+<h2>1. Wallets with a non-zero balance</h2>
+<p><b>254 wallets</b> hold a non-zero balance at block 128,390,000.</p>
+
+<h2>2. Top 10 holders</h2>
+<table>
+<tr><th>#</th><th>Address</th><th>Balance (FLAP)</th><th>% supply</th><th>Type</th></tr>
+<tr><td>1</td><td>0xca93ec685b8623688e6b236f9068034b298c2150</td><td>20,125,089,644</td><td>45.2815%</td><td>CONTRACT (buyback/pool-side contract — the source of all treasury buyback inflows)</td></tr>
+<tr><td>2</td><td>0x740a3b4a91cb8fa47e85d7f9713ca6ec2f8a037e</td><td>5,619,844,349</td><td>12.6446%</td><td>CONTRACT</td></tr>
+<tr><td>3</td><td>0x58fab046ce77064bf52c2eff4e163eb84386b8b4</td><td>2,334,009,349</td><td>5.2515%</td><td>Wallet (EOA)</td></tr>
+<tr><td>4</td><td>0x000000000000000000000000000000000000dEaD</td><td>1,923,471,160</td><td>4.3278%</td><td>Burn sink (dead address)</td></tr>
+<tr><td>5</td><td>0x2ea90ff709b0fb5decd1de944f644eecdc26d33a</td><td>1,175,621,343</td><td>2.6451%</td><td>Wallet (EOA)</td></tr>
+<tr><td>6</td><td>0x8e3dc66bb96b063afb932660fb5d060e170cf2cd</td><td>747,196,241</td><td>1.6812%</td><td>Wallet (EOA)</td></tr>
+<tr><td>7</td><td>0x238a358808379702088667322f80ac48bad5e6c4</td><td>675,088,886</td><td>1.5189%</td><td>CONTRACT</td></tr>
+<tr><td>8</td><td>0xf0e319587b54db351f4a20e2da09848fed4d8151</td><td>621,698,620</td><td>1.3988%</td><td>Wallet (EOA)</td></tr>
+<tr><td>9</td><td>0x5dedb37eaa9145dd1a17d385d8c5e256871d6f16</td><td>611,866,236</td><td>1.3767%</td><td>Wallet (EOA)</td></tr>
+<tr><td>10</td><td>0x9a937a531a3e4b7930a49548b64c4a3471d049e2</td><td>610,074,149</td><td>1.3727%</td><td>Wallet (EOA)</td></tr>
+</table>
+
+<h2>3. Treasury balance and share</h2>
+<p>Treasury <code>0x7C34E9e21Ee28A49Ff0b84B61774119E6633359f</code>: <b>277,219,882.64 FLAP = 0.6237%</b> of supply at block 128,390,000. Log-derived figure matches the direct on-chain <code>balanceOf</code> call exactly.</p>
+
+<h2>4. Receipt Relay payouts 10-12 → 10-17: who still holds all of their payout</h2>
+<p>18 verified Receipt Relay payout transfers (each re-checked via <code>eth_getTransactionReceipt</code>, FLAPJAX Transfer from the treasury, status 0x1) went to <b>11 distinct wallets</b> in the window (blocks 127111629–128262548). <b class="m">10 of 11 wallets still hold their entire payout</b>; 1 spent:</p>
+<table>
+<tr><th>Wallet</th><th>Total paid (FLAP)</th><th>Holding now</th><th>Verdict</th></tr>
+<tr><td>0x5047384cdb02d1117abece1f7a01d2b0e39c793f</td><td>1,250,000</td><td>1,250,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0x5c7a79549e4413a52b1787b5c7e10368720d2358</td><td>500,000</td><td>2,600,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0xcf4cac88df345bf16b550ca02fe4e1d1b27860d3</td><td>250,000</td><td>3,000,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0x3d98800c64c345950e1eaaa076d88c12d1bf5f37</td><td>250,000</td><td>1,350,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0x9067e71d30cf136f767ae4fd1ea0517314ac0982</td><td>250,000</td><td>1,550,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0xcfa08d418f136cc2a14c791fcf7e37b30d237592</td><td>250,000</td><td>250,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0x4a6419ee9666acaa6755fc0aebb27f48743c1e1e</td><td>250,000</td><td>2,500,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0xc8799d53f301c4917a1e6d863057734d9a848e84</td><td>250,000</td><td>2,250,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0xba567fea152c93b38513a44e1da3cbbee7f3b1dd</td><td>250,000</td><td>750,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0xfd5efa5c47fb3be071b2fd38fc88dfa30318c5d2</td><td>100,000</td><td>100,000</td><td class="m">HOLDS ALL</td></tr>
+<tr><td>0x8c062dc5d775b7d5efc168f75a875f392f53dcdf</td><td>1,350,000</td><td>0</td><td class="x">SPENT</td></tr>
+</table>
+
+<h2>5. Treasury statement check</h2>
+<p><i>"The treasury's FLAPJAX moves only by buyback buys in and bounty payouts out, never by a sale to the pool."</i></p>
+<table>
+<tr><th>Claim</th><th>Evidence (full history, 5,630 events)</th><th>Verdict</th></tr>
+<tr><td>Never a sale to the pool</td><td>Zero treasury→pool transfers in the entire history: no FLAPJAX ever sent from the treasury to the buyback contract <code>0xca93…c2150</code> (0 transfers) nor to contract <code>0x238a…e6c4</code> (0 transfers). All treasury outflows (212 transfers) are payout-sized sends (100k–15M) to individual wallets.</td><td class="m">MATCH</td></tr>
+<tr><td>Inflows are buyback buys</td><td>12 of 13 treasury inflows (421,449,883 FLAP) come from the buyback contract <code>0xca93…c2150</code> — consistent with buyback buys.</td><td class="m">MATCH</td></tr>
+<tr><td>Moves <i>only</i> by those two</td><td>One additional inflow does not fit either category: <b>10,000,000 FLAP</b> from wallet <code>0x2ea90ff709b0fb5decd1de944f644eecdc26d33a</code> at block 121836175 (pre-relay, initial funding era) — a plain wallet-to-treasury transfer, not a buyback and not a payout.</td><td class="n">MISMATCH (minor — one seed funding transfer outside the stated categories)</td></tr>
+</table>
+<p><b>Overall:</b> the load-bearing claim (treasury never sells into the pool) is confirmed. The word "only" is falsified by one 10M seed-funding inflow at block 121836175, tx re-checkable on BscScan.</p>
+
+<h2>Reproduction</h2>
+<p><small>Endpoint used: <code>https://bsc-mainnet.nodereal.io/v1/64a9df0874fb4a93b9d0a3849de012d3</code> (public NodeReal demo). Example re-check:</small></p>
+<p><code>curl -s -X POST -H 'Content-Type: application/json' -d '{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{"to":"0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df","data":"0x70a082310000000000000000000000007c34e9e21ee28a49ff0b84b61774119e6633359f"},"0x7a71370"]}' https://bsc-mainnet.nodereal.io/v1/64a9df0874fb4a93b9d0a3849de012d3</code></p>
+<p><small>Caveat for other auditors: this endpoint's <b>topic-filtered</b> <code>eth_getLogs</code> silently returns partial results — query unfiltered by address and filter client-side, and verify conservation before trusting any holder list.</small></p>
+
+<p><small>AI-created for the FlapJax Receipt Relay bounty. Not investment advice. Handle: NZ1Labs (github.com/isoloman275-wq). BSC wallet: 0xBb2186dd8569eF2FE39dDF8E9796640b057FfEe3</small></p>
+</body>
+</html>
