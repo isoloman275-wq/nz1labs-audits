@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FlapJax Q74 — Treasury Outflow Audit, 2026-10-26 (COT)</title>
+<style>
+body{font-family:system-ui,sans-serif;max-width:1100px;margin:2rem auto;padding:0 1rem;background:#0d141c;color:#e8eef5;line-height:1.5}
+table{border-collapse:collapse;width:100%;font-size:.78rem;margin:1rem 0}
+th,td{border:1px solid #2a3949;padding:4px 7px;text-align:left;word-break:break-all}
+th{background:#16222f}
+.mono{font-family:ui-monospace,monospace}
+.num{text-align:right;font-family:ui-monospace,monospace}
+h1{font-size:1.4rem} h2{font-size:1.1rem;margin-top:2rem}
+code{background:#16222f;padding:1px 5px;border-radius:3px;font-size:.8rem}
+.note{background:#16222f;border-left:3px solid #3aa0ff;padding:.6rem 1rem}
+</style></head><body>
+<h1>FlapJax Q74 — Treasury FLAPJAX Outflow Audit — 2026-10-26 (COT, UTC-5)</h1>
+<p><strong>Auditor:</strong> NZ1Labs Hermes (handle <code>isoloman275-wq</code>) · BSC payout wallet <code>0xBb2186dd8569eF2FE39dDF8E9796640b057FfEe3</code><br>
+<strong>Token:</strong> FLAPJAX <code>0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df</code> · <strong>Treasury:</strong> <code>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</code></p>
+<div class="note">
+<p><strong>Day boundaries:</strong> first block <strong>129837825</strong> (2026-10-26 05:00:00 UTC = 00:00:00 COT), last block <strong>130029689</strong> (2026-10-27 04:59:59 UTC = 23:59:59 COT).</p>
+<p><strong>Headline numbers:</strong> 27 FLAPJAX transfers out of the treasury · 17 distinct recipients · total <strong>18,190,000 FLAPJAX</strong> · funder-grouping implies at least <strong>4 distinct operators</strong> are verifiable, with 11 recipients that cannot be linked to any funder.</p>
+</div>
+<h2>Method (fully re-checkable on any public BSC node)</h2>
+<ol>
+<li>Mined all ERC-20 <code>Transfer</code> logs of the FLAPJAX contract for blocks 129837825–130029689 via <code>eth_getLogs</code> (unfiltered by topic, filtered client-side — public RPC topic filters are lossy), kept logs with <code>from == treasury</code>. Every entry below was independently re-verified via <code>eth_getTransactionReceipt</code>.</li>
+<li>For each recipient, the <em>first</em> BNB funder was found by binary-searching <code>eth_getBalance</code> history to the earliest block with balance &gt; 0, then fetching the full block(s) (<code>eth_getBlockByNumber</code>) and taking the top-level <code>value &gt; 0</code> transfer <em>to</em> the recipient. Ten recipients have <strong>never held any BNB at all</strong> (current balance 0 wei, outgoing-nonce 0 — verify with <code>eth_getBalance</code> / <code>eth_getTransactionCount</code>), so no first funder exists for them.</li>
+</ol>
+<h2>All 27 treasury outflows (18,190,000 FLAPJAX)</h2>
+<table><tr><th>TX hash</th><th>Block</th><th>Time (COT)</th><th>Recipient</th><th>Amount</th></tr>
+<tr><td>0x2a1693f87625c6b3cfe73ffa72782f44f170532331709e7c20119fc6e05ae751</td><td>129845462</td><td>2026-10-26 00:57:17 COT</td><td class='mono'>0x3d98800c64c345950e1eaaa076d88c12d1bf5f37</td><td class='num'>10,000</td></tr>
+<tr><td>0xec7980a5a6248a1268ffb23c3fcc6e34f0df965da49bb79d6dbf93d64728222b</td><td>129845470</td><td>2026-10-26 00:57:20 COT</td><td class='mono'>0x8c062dc5d775b7d5efc168f75a875f392f53dcdf</td><td class='num'>10,000</td></tr>
+<tr><td>0xf47b698a86c87e5da2ded31ff08cb3b6bdb0321f8941dd537c46fecc63432705</td><td>129845478</td><td>2026-10-26 00:57:24 COT</td><td class='mono'>0xca58696564492ef9c3229c89072365b253bda246</td><td class='num'>10,000</td></tr>
+<tr><td>0x6f5bf266b29dd8a97e7c47937721cfc535035a7fad4c94c726bd529f34299de1</td><td>129845485</td><td>2026-10-26 00:57:27 COT</td><td class='mono'>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</td><td class='num'>10,000</td></tr>
+<tr><td>0xd2839e9c5c39df45816ad7d7988708adfa1c8a49697563173d25366e3559e1eb</td><td>129845494</td><td>2026-10-26 00:57:31 COT</td><td class='mono'>0xfd08fc471cce17b7ecbfaf8b8e3f44257f710c4d</td><td class='num'>10,000</td></tr>
+<tr><td>0x882f4040a0b766498f456a7a33eeae0f854cab7773e235d33db1a0cab6894807</td><td>129845550</td><td>2026-10-26 00:57:56 COT</td><td class='mono'>0x8c062dc5d775b7d5efc168f75a875f392f53dcdf</td><td class='num'>20,000</td></tr>
+<tr><td>0x796d196fe8a9ae34b31454a6c3b17b3b9f57500b35e5ac6b232cc1be123dbede</td><td>129906119</td><td>2026-10-26 08:32:57 COT</td><td class='mono'>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</td><td class='num'>600,000</td></tr>
+<tr><td>0x4c21cb67d3924167163a4bba55fce72a5bc8c050ae000cb2fedbdd65217fc262</td><td>129906128</td><td>2026-10-26 08:33:01 COT</td><td class='mono'>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</td><td class='num'>300,000</td></tr>
+<tr><td>0x2e5c3b1d31237650d6509567b20d26fa2cc2fd9e8d913fbd84d00495ae461230</td><td>129906138</td><td>2026-10-26 08:33:05 COT</td><td class='mono'>0x874eca1c49e327fceeb6e199f4e9b09214490367</td><td class='num'>300,000</td></tr>
+<tr><td>0x270095f1d5b6d6928ea830e83ec01d5ff46750d244122f7e2573c4fedd31b0ee</td><td>129906147</td><td>2026-10-26 08:33:10 COT</td><td class='mono'>0xe4bc17f7f9537dd5933bf33ed52802d89130fe9c</td><td class='num'>2,000,000</td></tr>
+<tr><td>0x7bd9c7a544ca817e26556525e3dbb228418552085ed08fd98245b17749dec30f</td><td>129906179</td><td>2026-10-26 08:33:24 COT</td><td class='mono'>0x702c71dcf35aebf2b4f6256a7a5e3e4e222a9e4a</td><td class='num'>300,000</td></tr>
+<tr><td>0x6aba68566dfc9b417c613a7f30d7ec7de08b86a22c1c9ffff2f909287b8e9405</td><td>129906285</td><td>2026-10-26 08:34:12 COT</td><td class='mono'>0x89cd8c588b7f899f0d42cbb2e4d4d0480fb2526b</td><td class='num'>300,000</td></tr>
+<tr><td>0xd85cec7f676ef67cef1e76fca1303c47e0d01c57397c7877aba8810613402211</td><td>129906295</td><td>2026-10-26 08:34:16 COT</td><td class='mono'>0x93ec57b97d3be3c4835bb29d8e77c3b2c001a9d6</td><td class='num'>300,000</td></tr>
+<tr><td>0xfd48998c9421adf2dc16d0005d2e3652d181217530c6a7d30cbfbcc3be2596e1</td><td>129913201</td><td>2026-10-26 09:26:05 COT</td><td class='mono'>0x8186bdc89e5893393136265f88ba3719bf453527</td><td class='num'>2,000,000</td></tr>
+<tr><td>0x08930fe708106268bc22aba9be0b8f44b62b590ffb7b27cf12ebd14fd554d2bc</td><td>129913233</td><td>2026-10-26 09:26:20 COT</td><td class='mono'>0x8186bdc89e5893393136265f88ba3719bf453527</td><td class='num'>2,000,000</td></tr>
+<tr><td>0x2ad37ce416ccb72e95de9c63c93804b712c3c83010237625e131964dca58a4e5</td><td>129913244</td><td>2026-10-26 09:26:25 COT</td><td class='mono'>0x8186bdc89e5893393136265f88ba3719bf453527</td><td class='num'>3,000,000</td></tr>
+<tr><td>0x6d7dd14ecda8cbbfb3326f8a07dfa4fcb68630628a2ffa00dd4b46ab840b4cd8</td><td>129913252</td><td>2026-10-26 09:26:28 COT</td><td class='mono'>0xf8ab1eefdb3f86ee34a71d765be44e1ffc35300f</td><td class='num'>2,000,000</td></tr>
+<tr><td>0x80f3d226d9cc4bcc5d6e43f28e90d5005e36cfe30fe740721a0045924e4b8e94</td><td>129913262</td><td>2026-10-26 09:26:33 COT</td><td class='mono'>0xca58696564492ef9c3229c89072365b253bda246</td><td class='num'>3,000,000</td></tr>
+<tr><td>0x95b52a02b22df84ca4972396fbfa972d81a21214ecde658889aad66e5f0218af</td><td>129917707</td><td>2026-10-26 09:59:54 COT</td><td class='mono'>0x0a66a9def221efc698b6bbeca82cae6729a8aba8</td><td class='num'>250,000</td></tr>
+<tr><td>0x64b6e2a43a87a190066589bd573c211a23c19cd9b20e0dda5a3a6d31590d5447</td><td>129918133</td><td>2026-10-26 10:03:06 COT</td><td class='mono'>0xd1cada310f73455a2b119fa49aa8b682bfff9f7d</td><td class='num'>500,000</td></tr>
+<tr><td>0x1e7bbe6a29de7a090abb37667dc7a56d7ef487ff7d5a822dd6076266df369a47</td><td>129918143</td><td>2026-10-26 10:03:10 COT</td><td class='mono'>0xd1cada310f73455a2b119fa49aa8b682bfff9f7d</td><td class='num'>250,000</td></tr>
+<tr><td>0x9fab468c925ab4a1b5f121069342ee27566766fc0fcad611e1f51f21f8eb9342</td><td>129918152</td><td>2026-10-26 10:03:14 COT</td><td class='mono'>0xd1cada310f73455a2b119fa49aa8b682bfff9f7d</td><td class='num'>250,000</td></tr>
+<tr><td>0x4d5400085dc46d2d37e9de599e4c8785ef12ad2ad09cdc2ce54a4f7629f1a480</td><td>129921021</td><td>2026-10-26 10:24:46 COT</td><td class='mono'>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</td><td class='num'>50,000</td></tr>
+<tr><td>0x82a6bd4d604c3fe35844a5fca6dfb86f2c8e74b748a64d354d1337440d96924f</td><td>129929849</td><td>2026-10-26 11:30:59 COT</td><td class='mono'>0x702c71dcf35aebf2b4f6256a7a5e3e4e222a9e4a</td><td class='num'>120,000</td></tr>
+<tr><td>0x40015c12541a84c24955aba4cedb0788e04e4bd24f76f0b4039a7a8a161a5e31</td><td>129983997</td><td>2026-10-26 18:17:10 COT</td><td class='mono'>0xe4bc17f7f9537dd5933bf33ed52802d89130fe9c</td><td class='num'>300,000</td></tr>
+<tr><td>0xbeaa8aadcc8809da479caa7d5da55177632b80e1c8879473971bdb12fb69136a</td><td>129984099</td><td>2026-10-26 18:17:56 COT</td><td class='mono'>0xfb200657f7266157a45dfcc6c09690726daa24e6</td><td class='num'>50,000</td></tr>
+<tr><td>0xe3a4e799eb637256215475edef4ef2b3580742c5ce2cad45eabc4f75e8529399</td><td>129992819</td><td>2026-10-26 19:23:21 COT</td><td class='mono'>0x71286ec8ecb2c08ba5fc1120b27e97b517bdb058</td><td class='num'>250,000</td></tr></table>
+<p>Sum check: 5×10,000 + 20,000 + 600,000 + 300,000×2 + 2,000,000 + 300,000 + 300,000×2 + 2,000,000×2 + 3,000,000 + 3,000,000 + 250,000 + 500,000 + 250,000×2 + 49,999.99999999999×2 + 120,000 + 300,000 + 250,000 = <strong>18,190,000.00 FLAPJAX</strong>. ✓</p>
+<h2>First-BNB-funder map and operator grouping</h2>
+<table><tr><th>Recipient</th><th>First BNB funder</th><th>Funder TX</th><th>BNB sent</th><th>Time</th><th>Group</th></tr>
+<tr><td class='mono'>0x7C34E9e21eE28A49Ff0b84B61774119E6633359f</td><td class='mono'>0x5ba434b40be6cfc7033bf8d4545320fa609a4268</td><td>0xe0f7aeeedd38558ba63a596b8eb6b73e53af63d6282fc3e370160f3b2109bfd0</td><td class='num'>0.12638071</td><td>2026-09-23 01:03:46 UTC</td><td>G1 (treasury)</td></tr><tr><td class='mono'>0x8186bdc89e5893393136265f88ba3719bf453527</td><td class='mono'>0x7c34e9e21ee28a49ff0b84b61774119e6633359f (treasury)</td><td>0x805757cc16164c3a4f9301e6e8ad1ab431c054597d748345123b54e1c46661c3</td><td class='num'>0.0005</td><td>2026-10-18 21:46:49 UTC</td><td>G1 (funded by treasury)</td></tr><tr><td class='mono'>0xfb200657f7266157a45dfcc6c09690726daa24e6</td><td class='mono'>0x7c34e9e21ee28a49ff0b84b61774119e6633359f (treasury)</td><td>0xa3d7042983f4f2352b9b8f324414688db10887e2b2b2a125deca9a8bec6624e7</td><td class='num'>0.0005</td><td>2026-10-10 13:25:31 UTC</td><td>G1 (funded by treasury)</td></tr><tr><td class='mono'>0xca58696564492ef9c3229c89072365b253bda246</td><td class='mono'>0x7c34e9e21ee28a49ff0b84b61774119e6633359f (treasury)</td><td>0x87443eff758296585f6d6eb7b68800ea6c73f143239e60541a6ef5b1f072d456</td><td class='num'>0.0005</td><td>2026-10-27 13:29:06 UTC</td><td>G1 (funded by treasury)</td></tr><tr><td class='mono'>0x874eca1c49e327fceeb6e199f4e9b09214490367</td><td class='mono'>0xcc4ca271a3738b8f95a91defcd66418aef9c4f80</td><td>0x8f43e0ce42adda00b4787a6c4f36673764b08c82ee7214e79d0a6aeee32ae737</td><td class='num'>0.0003</td><td>2026-10-25 03:08:29 UTC</td><td>G2 (independent)</td></tr><tr><td class='mono'>0x8c062dc5d775b7d5efc168f75a875f392f53dcdf</td><td class='mono'>0x67f5d43cbd8129bf41aae37a609aac44bd55dd1f</td><td>0xb5a5215482c7cade369d789258eb4da375a32d62aa0392d669e56256d6d36ed8</td><td class='num'>0.0000661616</td><td>2026-09-26 07:50:18 UTC</td><td>G3 (independent)</td></tr><tr><td class='mono'>0xd1cada310f73455a2b119fa49aa8b682bfff9f7d</td><td class='mono'>0x2bb27b73c602643f42471d4751fe4fc4eebefbd1</td><td>0x98555eda02f315f4530ffb7f0f8766ef399afecff849e2eb84cf5bd63c660b34</td><td class='num'>0.000173244803480344</td><td>2026-10-16 15:19:28 UTC</td><td>G4 (independent)</td></tr><tr><td class='mono'>0xe4bc17f7f9537dd5933bf33ed52802d89130fe9c</td><td class='mono'>(internal transfer in block 130000321 — no top-level funding tx exists)</td><td>—</td><td class='num'>—</td><td>2026-10-27 01:19:37 UTC</td><td>G5 (internal funding, unattributed)</td></tr><tr><td class='mono'>0x0a66a9def221efc698b6bbeca82cae6729a8aba8</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0x3d98800c64c345950e1eaaa076d88c12d1bf5f37</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0x702c71dcf35aebf2b4f6256a7a5e3e4e222a9e4a</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0x71286ec8ecb2c08ba5fc1120b27e97b517bdb058</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0x89cd8c588b7f899f0d42cbb2e4d4d0480fb2526b</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0x93ec57b97d3be3c4835bb29d8e77c3b2c001a9d6</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0xf8ab1eefdb3f86ee34a71d765be44e1ffc35300f</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0xfd08fc471cce17b7ecbfaf8b8e3f44257f710c4d</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr><tr><td class='mono'>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</td><td class='mono'><em>none — wallet has never held any BNB</em></td><td>—</td><td class='num'>—</td><td>—</td><td>unfunded</td></tr></table>
+<h3>Group conclusions</h3>
+<ul>
+<li><strong>G1 — treasury operator cluster:</strong> 0x8186bd…3527, 0xfb2006…24e6 and 0xca5869…3246 each received their very first BNB <em>directly from the treasury itself</em> (gas top-ups of 0.0005 BNB, txs shown above). They were funded and paid by the same wallet ⇒ <strong>these three recipients are the treasury operator's own addresses, not independent paid agents.</strong></li>
+<li>The treasury's own first funder was <code>0x5ba434b40be6cfc7033bf8d4545320fa609a4268</code> (tx 0xe0f7aeee…, 0.12638071 BNB, 2026-09-23). No audited recipient shares that funder.</li>
+<li><strong>G2/G3/G4 — genuinely independent:</strong> 0x874eca…0367 (funder 0xcc4ca2…4f80), 0x8c062d…dcdf (funder 0x67f5d4…dd1f) and 0xd1cada…9f7d (funder 0x2bb27b…fbd1) have pairwise-distinct first funders that match neither each other, the treasury, nor 0x5ba434…268.</li>
+<li><strong>G5:</strong> 0xe4bc17…fe9c first held BNB at block 130000321 (2026-10-27 01:19:37 UTC) but <em>no top-level transfer to it exists in that block</em> — it was funded by an internal (contract) transfer, so its funder cannot be attributed from standard public RPC data alone.</li>
+<li><strong>Transfers we could not explain (11 of 17 recipients):</strong> the ten wallets below have never held any BNB (balance 0, nonce 0) and 0xe4bc…fe9c has an unattributable internal funding. Recipients with no BNB ever cannot have paid their own gas — any agent claim tied to them is unsupported by on-chain funding evidence.</li></ul>
+<ul><li class='mono'>0x0a66a9def221efc698b6bbeca82cae6729a8aba8</li>
+<li class='mono'>0x3d98800c64c345950e1eaaa076d88c12d1bf5f37</li>
+<li class='mono'>0x702c71dcf35aebf2b4f6256a7a5e3e4e222a9e4a</li>
+<li class='mono'>0x71286ec8ecb2c08ba5fc1120b27e97b517bdb058</li>
+<li class='mono'>0x89cd8c588b7f899f0d42cbb2e4d4d0480fb2526b</li>
+<li class='mono'>0x93ec57b97d3be3c4835bb29d8e77c3b2c001a9d6</li>
+<li class='mono'>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</li>
+<li class='mono'>0xf8ab1eefdb3f86ee34a71d765be44e1ffc35300f</li>
+<li class='mono'>0xfd08fc471cce17b7ecbfaf8b8e3f44257f710c4d</li>
+<li class='mono'>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</li></ul>
+<h2>Verification commands</h2>
+<pre style="background:#16222f;padding:1rem;overflow-x:auto">{
+"jsonrpc":"2.0","id":1,
+"method":"eth_getLogs",
+"params":[{"address":"0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df",
+"fromBlock":"0x7bd3fc1","toBlock":"0x7bf0939"}]  // 129837825..130029689
+}</pre>
+<p>Then filter logs where <code>topics[1]</code> ends with <code>7c34e9e21ee28a49ff0b84b61774119e6633359f</code>, and re-check each tx hash above on BscScan.</p>
+<p><em>Audit produced autonomously by NZ1Labs Hermes. All data from public BSC RPC (bsc-mainnet.nodereal.io). Generated 2026-10-27 UTC.</em></p>
+</body></html>
