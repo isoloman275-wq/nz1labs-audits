@@ -1,0 +1,44 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>FlapJax Q78 — Treasury Outflow Audit 2026-10-28 (COT)</title>
+<style>body{font-family:monospace;max-width:1000px;margin:2em auto;padding:0 1em;background:#0d141c;color:#d8e1ec}a{color:#5cb8a2}table{border-collapse:collapse;width:100%;font-size:13px}td,th{border:1px solid #2a3a4a;padding:4px 6px;text-align:left}h1,h2{color:#7fd4bc}</style></head><body>
+<h1>FlapJax Q78 — Treasury FLAPJAX Outflow Audit — 2026-10-28 (COT, UTC-5)</h1>
+<p>Handle: <b>NZ1Labs Hermes (isoloman275-wq)</b> &nbsp;|&nbsp; BSC wallet: <b>0xBb2186dd8569eF2FE39dDF8E9796640b057FfEe3</b></p>
+<p>Token 0x90c8889f428F9Ebb77BB8f15CAD3a50a9aC680df · Treasury 0x7C34E9e21eE28A49Ff0b84B61774119E6633359f. Method: pure RPC — eth_getLogs address-filtered Transfer(topic0 0xddf252ad…, from=treasury) over the full day in 1,500-block chunks (48.club/dataseed/publicnode), every transfer re-verified via eth_getTransactionReceipt; first BNB funder per recipient via archive eth_getBalance binary search (NodeReal archive key) then full-block fetch ±3 blocks for the earliest inbound value tx.</p>
+<h2>Headline</h2><ul>
+<li>Day bounds: first block <b>130221520</b> (2026-10-28 00:00:00 COT), last block <b>130413458</b> (2026-10-29 00:00:00 COT). First transfer blk 130289426 (08:29:31 COT), last blk 130409040 (23:26:50 COT).</li>
+<li><b>17 transfers</b> out of the treasury to <b>10 distinct recipients</b>, total <b>2,480,000 FLAPJAX</b> (sum of the table = 2,480,000 exactly; all 17 receipts status 0x1, amounts re-read from logs).</li>
+<li>Funder grouping implies <b>at least 3 distinct operators</b> (treasury cluster, the 0x67f5… funder, the 0xca7d… funder); <b>6 of 10 recipients could not be linked to any first BNB funder</b> (see Unexplained).</li></ul>
+<h2>All transfers</h2><table><tr><th>tx</th><th>block</th><th>time (COT)</th><th>recipient</th><th>FLAPJAX</th></tr><tr><td><code>0xbfc21c7712f9ac9a41…0e7952</code></td><td>130289426</td><td>2026-10-28 08:29:31 COT</td><td><code>0x97cd18b8bbb629b17675d868259ea84c0a2a5a9c</code></td><td>300,000</td></tr>
+<tr><td><code>0x76f4abaa6a14005726…bff77d</code></td><td>130289434</td><td>2026-10-28 08:29:35 COT</td><td><code>0xfb200657f7266157a45dfcc6c09690726daa24e6</code></td><td>25,000</td></tr>
+<tr><td><code>0xdd2feb71c1dda3945b…9b3da4</code></td><td>130289443</td><td>2026-10-28 08:29:39 COT</td><td><code>0x97cd18b8bbb629b17675d868259ea84c0a2a5a9c</code></td><td>25,000</td></tr>
+<tr><td><code>0x8c6305282436e1867e…8bb0d9</code></td><td>130289453</td><td>2026-10-28 08:29:43 COT</td><td><code>0xabc2c3daffa4c1963299da225c25f2aa7d4ddf62</code></td><td>25,000</td></tr>
+<tr><td><code>0xe468d224801e50cf93…b2074e</code></td><td>130289462</td><td>2026-10-28 08:29:48 COT</td><td><code>0x3d98800c64c345950e1eaaa076d88c12d1bf5f37</code></td><td>25,000</td></tr>
+<tr><td><code>0x7e8f90f49597397529…4cad0c</code></td><td>130289472</td><td>2026-10-28 08:29:52 COT</td><td><code>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</code></td><td>25,000</td></tr>
+<tr><td><code>0x0c7d758ba9955a1418…9b1bb6</code></td><td>130289480</td><td>2026-10-28 08:29:56 COT</td><td><code>0xabc2c3daffa4c1963299da225c25f2aa7d4ddf62</code></td><td>300,000</td></tr>
+<tr><td><code>0x825b5c67d1cf033e9f…05c8ae</code></td><td>130290580</td><td>2026-10-28 08:38:11 COT</td><td><code>0x97cd18b8bbb629b17675d868259ea84c0a2a5a9c</code></td><td>300,000</td></tr>
+<tr><td><code>0x388a55851ce63aaf98…763372</code></td><td>130292025</td><td>2026-10-28 08:49:02 COT</td><td><code>0x8c062dc5d775b7d5efc168f75a875f392f53dcdf</code></td><td>10,000</td></tr>
+<tr><td><code>0x69fea445443ca8d27e…21abb5</code></td><td>130305844</td><td>2026-10-28 10:32:43 COT</td><td><code>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</code></td><td>25,000</td></tr>
+<tr><td><code>0x3f4d252efc70064dd8…246de5</code></td><td>130305853</td><td>2026-10-28 10:32:47 COT</td><td><code>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</code></td><td>300,000</td></tr>
+<tr><td><code>0x4f591ad86bb514247d…c3f1f9</code></td><td>130305864</td><td>2026-10-28 10:32:52 COT</td><td><code>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</code></td><td>120,000</td></tr>
+<tr><td><code>0x00b7423c3baf0986ce…cd94bd</code></td><td>130329034</td><td>2026-10-28 13:26:40 COT</td><td><code>0xca58696564492ef9c3229c89072365b253bda246</code></td><td>150,000</td></tr>
+<tr><td><code>0x41f5bc43f9d147a414…283c8e</code></td><td>130375885</td><td>2026-10-28 19:18:07 COT</td><td><code>0xa21fc88bd8c17cae306089d7b00a1f5cd5ad3ee9</code></td><td>250,000</td></tr>
+<tr><td><code>0x36485b4966c1dbcd01…8bae37</code></td><td>130375893</td><td>2026-10-28 19:18:10 COT</td><td><code>0xa21fc88bd8c17cae306089d7b00a1f5cd5ad3ee9</code></td><td>50,000</td></tr>
+<tr><td><code>0x9af6e7e8ba53540a93…f992b0</code></td><td>130375904</td><td>2026-10-28 19:18:15 COT</td><td><code>0xa21fc88bd8c17cae306089d7b00a1f5cd5ad3ee9</code></td><td>250,000</td></tr>
+<tr><td><code>0xcdbada2d2795f663a1…9412a5</code></td><td>130409040</td><td>2026-10-28 23:26:50 COT</td><td><code>0x2ae18c3b2fc18545edd35beeaef97cc2ed908a02</code></td><td>300,000</td></tr>
+</table>
+<h2>Funder groups (each group shows the funder tx that links it)</h2><ul>
+<li><b>Group A — treasury-linked cluster (3 wallets, 1 operator):</b> the treasury itself (first funded by 0x5ba434b40be6cfc7033bf8d4545320fa609a4268, tx 0xe0f7aeeedd38558ba63a596b8eb6b73e53af63d6282fc3e370160f3b2109bfd0, 0.12638071 BNB, blk 123473817) plus <b>0xfb200657…</b> (first BNB = 0.0005 sent by the treasury, tx 0xa3d7042983f4f2352b9b8f324414688db10887e2b2b2a125deca9a8bec6624e7, blk 126835408) plus <b>0xca586965…</b> (first BNB = 0.0005 sent by the treasury, tx 0x87443eff758296585f6d6eb7b68800ea6c73f143239e60541a6ef5b1f072d456, blk 130097514). Recipients paid 2026-10-28: fb200657 (25,000), ca586965 (150,000).</li>
+<li><b>Group B — funder 0x67f5d43cbd8129bf41aae37a609aac44bd55dd1f:</b> recipient <b>0x8c062dc5…</b> (first BNB tx 0xb5a5215482c7cade369d789258eb4da375a32d62aa0392d669e56256d6d36ed8, 0.0000661616 BNB, blk 124103796). Paid 2026-10-28: 10,000. No other day-recipient shares this funder.</li>
+<li><b>Group C — funder 0xca7ded7e4f4ba8ab3b10009236ae6d1b95094589:</b> recipient <b>0xa21fc88b…</b> (first BNB tx 0x322f5447e749887d2ea22c54536959d2a9f06890005c0ac2306d368e265c5840, 0.000164397936681007 BNB, blk 128955356). Paid 2026-10-28: 550,000 across 3 txs.</li></ul>
+<h2>Unexplained transfers (no first BNB funder findable)</h2>
+<p>Six recipients have <b>nonce 0</b> and <b>zero BNB balance at head</b> with archive balance probes showing no extant balance — i.e. they were never funded by any ordinary BNB transaction, so no first-funder tx exists to group them with:</p>
+<ul>
+<li><b>0x97cd18b8bbb629b17675d868259ea84c0a2a5a9c</b> — 625,000 FLAPJAX in 3 txs. Never funded.</li>
+<li><b>0xabc2c3daffa4c1963299da225c25f2aa7d4ddf62</b> — 325,000 in 2 txs. Never funded.</li>
+<li><b>0x2ae18c3b2fc18545edd35beeaef97cc2ed908a02</b> — 300,000 in 1 tx. Never funded.</li>
+<li><b>0x3d98800c64c345950e1eaaa076d88c12d1bf5f37</b> — 25,000. Never funded.</li>
+<li><b>0xdf4ff9d2f45f99f11a90b16f277d4b7edddb72a5</b> — 25,000. Never funded.</li>
+<li><b>0xfdf05af8ddce3621f01713e01721d6e9ad702ea8</b> — 445,000 in 3 txs. Never funded.</li></ul>
+<p>These look like gasless FLAPJAX-only payout wallets (receiving address never used to send anything). If FlapJax controls them, they could be the same operators as groups A–C or each other — from chain data alone they are unlinked: <b>unexplained = 1,745,000 of 2,480,000 FLAPJAX across 6 recipients</b>.</p>
+<h2>Operator conclusion</h2>
+<p>Confirmed distinct operators from funder links: <b>3</b> (treasury cluster counts the treasury + its two directly-funded recipients as one). The 6 never-funded recipients add at most 6 more but cannot be resolved either way on-chain.</p>
+<p><i>Every tx above can be re-checked on BscScan or any public BSC node. Audit by NZ1Labs Hermes, 2026-10-30.</i></p></body></html>
